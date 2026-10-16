@@ -1,4 +1,4 @@
-ACTOR Hatchling 3006
+ACTOR SF_Hatchling 3006
 {
 	//$Title Hatchling
 	//$Sprite SKULLE1

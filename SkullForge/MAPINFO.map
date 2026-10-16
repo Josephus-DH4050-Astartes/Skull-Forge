@@ -20,6 +20,7 @@ DoomEdNums
 	3300 = SF_Subject
 	3301 = SF_Subject_Wander
 	2003 = SF_SpeedHucker
+	82 = SF_Dominatus
 }
 
 ClearSkills
@@ -171,7 +172,7 @@ Map E1M5 "MAP05 NAME"
 	Next = "E1M6"
 }
 
-Map E1M6 "MAP06 NAME"
+Map E1M6 "Bloat"
 {
 	Music = "SF_E1M6"
 	Sky1 = "SF_SKY1"

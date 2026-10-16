@@ -1,3 +1,23 @@
+Actor SF_ArmorBonus : BasicArmorBonus 2015
+{
+    //$Title "Armor Shard (Armor Bonus)"
+    //$Category Health and Armor
+    //$Colour 1
+    //$Sprite AMRBA0
+    //$NotAngled
+    Inventory.PickupMessage "\ciARMOR AQUIRED: \cbSecurity Armor \c*(+100 AP / 40%)"
+    Inventory.Icon "ARMBA0"
+    Armor.SavePercent 30
+    Armor.SaveAmount 1
+    Armor.MaxSaveAmount 200
+    States
+    {
+        Spawn:
+            ARMB A -1
+            Stop
+    }
+}
+
 Actor SF_GreenArmor : BasicArmorPickup 2018
 {
     //$Title "Security Armor (Green Armor)"

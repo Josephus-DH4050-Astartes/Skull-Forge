@@ -5,6 +5,6 @@ IWAD
 	Autoname = "SF"
 	Game = "Doom"
 	Config = "MyStandaloneGame"
-	IWADName = "Skull Forge Alpha 2.0.ipk3"
+	IWADName = "Skullforge.ipk3"
 	Mapinfo = "mapinfo/mindefaults.txt"
 }

@@ -12,7 +12,7 @@
 #include "Actors/Player/Weapons/RIPSAW.dec"
 #include "Actors/Player/Weapons/NOVA.dec"
 #include "Actors/Player/Weapons/SLUGGER.dec"
-#include "Actors/Player/Weapons/DOMINATUS.dec"
+//#include "Actors/Player/Weapons/DOMINATUS.dec"
 #include "Actors/Player/Weapons/VIPER.dec"
 //#include "Actors/Player/Weapons/SPEEDHUCKER.dec"
 

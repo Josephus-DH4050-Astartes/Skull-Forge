@@ -28,8 +28,8 @@ Class SF_SpeedHucker : Weapon
     {
         Super.Tick();
 
-        // Only run this logic if a player is actually holding the weapon
-        if (Owner && Owner.Player)
+        // Only run this logic if a player is holding the weapon AND it is currently equipped
+        if (Owner && Owner.Player && Owner.Player.ReadyWeapon == self)
         {
             // Check if the Alt-Fire button is being pressed
             bool altDown = (Owner.Player.cmd.buttons & BT_ALTATTACK);
@@ -41,6 +41,11 @@ Class SF_SpeedHucker : Weapon
             }
 
             altWasPressed = altDown;
+        }
+        else
+        {
+            // Reset state when holstered so it doesn't trigger unexpectedly upon switching back
+            altWasPressed = false;
         }
 
         if(soundDelay > 0) soundDelay--;

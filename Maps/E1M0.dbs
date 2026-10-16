@@ -1,0 +1,117 @@
+type = "Doom Builder Map Settings Configuration";
+gameconfig = "UZDoom_DoomUDMF.cfg";
+strictpatches = 0;
+
+maps
+{
+	
+	E1M0
+	{
+		defaultwalltexture = "AQSUPP01";
+		overridemiddletexture = false;
+		defaultceiltexture = "AQF019";
+		overrideceiltexture = false;
+		custombrightness = 196;
+		scriptcompiler = "zdoom_acs.cfg";
+		
+		resources
+		{
+		}
+		viewpositiony = 2206.541f;
+		viewpositionx = 2099.527f;
+		
+		testprecommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		customceilheight = 128;
+		customfloorheight = 0;
+		
+		grid
+		{
+			backoffsetx = 0;
+			backsource = 0;
+			gridoriginy = 0;
+			backscaley = 100;
+			gridrotate = 0;
+			backscalex = 100;
+			gridoriginx = 0;
+			gridsize = 1;
+			background = "";
+			backoffsety = 0;
+		}
+		viewscale = 0.1712666f;
+		
+		reloadresourceprecommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		defaulttoptexture = "AQSUPP01";
+		overridebottomtexture = false;
+		defaultbottomtexture = "AQSUPP01";
+		defaultfloortexture = "AQF053";
+		overrideceilheight = false;
+		overridebrightness = false;
+		
+		testpostcommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		overridefloorheight = false;
+		overridetoptexture = false;
+		uselongtexturenames = false;
+		overridefloortexture = false;
+		
+		reloadresourcepostcommand
+		{
+			autocloseonsuccess = true;
+			exitcodeiserror = true;
+			stderriserror = true;
+		}
+		
+		fieldtypes
+		{
+			
+			linedef
+			{
+				flags = 0;
+			}
+			
+			thing
+			{
+				flags = 0;
+			}
+		}
+		
+		scriptdocuments
+		{
+			
+			document0
+			{
+				filename = "DIALOGUE";
+				hash = 3588187714;
+				resource;
+				tabtype = 0;
+				scripttype = 18;
+			}
+			
+			document1
+			{
+				filename = "SCRIPTS";
+				hash = 3469170009;
+				resource;
+				tabtype = 0;
+				scripttype = 1;
+				caretposition = 1588;
+				firstvisibleline = 28;
+				activetab = true;
+			}
+		}
+	}
+}

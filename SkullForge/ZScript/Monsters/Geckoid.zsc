@@ -21,47 +21,47 @@ class SF_Geckoid : Actor
         ActiveSound "monsters/geckoid/active";
         HitObituary "%o was Ganked by a Geckoid";
         Obituary "%o was Grilled by a Geckoid";
-        MaxStepHeight 24; // Explicitly defining the standard limit
+        MaxStepHeight 24; 
     }
 
-    // Custom function for the High Jump/Vaulting mechanic
-    void TryVaultWall()
+    // Changed to bool.
+    bool TryVaultWall()
     {
-        // Only attempt to jump if currently on the ground
-        if (pos.z <= floorz)
+        if (pos.z > floorz) return false;
+
+        FLineTraceData traceData;
+        bool hit = LineTrace(angle, radius + 12.0, 0, TRF_THRUACTORS, 16.0, 0, 0, traceData);
+
+        if (hit && traceData.HitType == TRACE_HitWall)
         {
-            FLineTraceData traceData;
-            // Trace slightly further than the radius to detect the wall in front
-            bool hit = LineTrace(angle, radius + 12.0, 0, TRF_THRUACTORS, 16.0, 0, 0, traceData);
+            Line hitLine = traceData.HitLine;
+            
+            if (hitLine.flags & (Line.ML_BLOCKING | Line.ML_BLOCKMONSTERS | Line.ML_BLOCKEVERYTHING))
+                return false;
 
-            if (hit && traceData.HitType == TRACE_HitWall)
+            if (hitLine && hitLine.backsector)
             {
-                Line hitLine = traceData.HitLine;
-                if (hitLine && hitLine.backsector)
+                Sector otherSector = (hitLine.frontsector == traceData.HitSector) ? hitLine.backsector : hitLine.frontsector;
+
+                if (otherSector)
                 {
-                    Sector otherSector = (hitLine.frontsector == traceData.HitSector) ? hitLine.backsector : hitLine.frontsector;
+                    double targetFloorZ = otherSector.floorplane.ZAtPoint(traceData.HitLocation.XY);
+                    double targetCeilZ = otherSector.ceilingplane.ZAtPoint(traceData.HitLocation.XY);
+                    double stepHeight = targetFloorZ - pos.z;
 
-                    if (otherSector)
+                    if (stepHeight > 24.0 && stepHeight < 128.0 && (targetCeilZ - targetFloorZ) >= Height)
                     {
-                        double targetFloorZ = otherSector.floorplane.ZAtPoint(traceData.HitLocation.XY);
-                        double stepHeight = targetFloorZ - pos.z;
-
-                        // Logic: If the wall is higher than the auto-step (24) 
-                        // but lower than the jump max (144)
-                        if (stepHeight > 24.0 && stepHeight < 144.0)
-                        {
-                            vel.z = 9.5 + (stepHeight * 0.1); 
-                            
-                            // Give a boost forward to ensure we land on the ledge
-                            A_FaceTarget(); // Re-align to target before jumping forward
-                            A_StartSound("monsters/geckoid/jump",CHAN_VOICE);
-                            vel.x += cos(angle) * 4.0;
-                            vel.y += sin(angle) * 4.0;
-                        }
+                        A_FaceTarget(); 
+                        A_StartSound("monsters/geckoid/jump", CHAN_VOICE);
+                        
+                        // Apply vertical jump only
+                        vel.z = sqrt(stepHeight * 2.0) + 1.0; 
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
 
     States
@@ -73,9 +73,25 @@ class SF_Geckoid : Actor
         TROO AABBCCDD 3 
         {
             A_Chase();
-            TryVaultWall(); // Check for jumpable walls every few tics
+            if (TryVaultWall()) return ResolveState("VaultLedge");
+            return ResolveState(null);
         }
         Loop;
+        
+    // NEW STATE: Pushes the Geckoid forward over the ledge
+    VaultLedge:
+        TROO A 1 Fast
+        {
+            // Geckoid is faster, so give him a slightly stronger forward vault speed
+            vel.x = cos(angle) * 6.0;
+            vel.y = sin(angle) * 6.0;
+            
+            // If landed, resume chasing
+            if (vel.z <= 0 && pos.z <= floorz) return ResolveState("See");
+            return ResolveState(null);
+        }
+        Loop;
+
     Missile:
         TROO EF 6 A_FaceTarget();
         TROO G 6 
@@ -109,7 +125,6 @@ class SF_Geckoid : Actor
         Goto See;
     }
 }
-
 class SF_GeckoidBall : Actor
 {
     Default

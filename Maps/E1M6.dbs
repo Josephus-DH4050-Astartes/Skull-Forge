@@ -1,5 +1,5 @@
 type = "Doom Builder Map Settings Configuration";
-gameconfig = "GZDoom_DoomUDMF.cfg";
+gameconfig = "UZDoom_DoomUDMF.cfg";
 strictpatches = 0;
 
 maps
@@ -17,8 +17,8 @@ maps
 		resources
 		{
 		}
-		viewpositiony = 518.3079f;
-		viewpositionx = 217.242f;
+		viewpositiony = 2528.53f;
+		viewpositionx = 986.0074f;
 		
 		testprecommand
 		{
@@ -38,11 +38,11 @@ maps
 			gridrotate = 0;
 			backscalex = 100;
 			gridoriginx = 0;
-			gridsize = 32;
+			gridsize = 16;
 			background = "";
 			backoffsety = 0;
 		}
-		viewscale = 0.4853051f;
+		viewscale = 0.6308908f;
 		
 		reloadresourceprecommand
 		{
@@ -52,15 +52,6 @@ maps
 		}
 		defaulttoptexture = "OBNKRL39";
 		overridebottomtexture = false;
-		
-		fieldtypes
-		{
-			
-			thing
-			{
-				flags = 0;
-			}
-		}
 		defaultbottomtexture = "OBNKRL39";
 		defaultfloortexture = "08DMDA06";
 		overrideceilheight = false;
@@ -82,6 +73,40 @@ maps
 			autocloseonsuccess = true;
 			exitcodeiserror = true;
 			stderriserror = true;
+		}
+		
+		fieldtypes
+		{
+			
+			thing
+			{
+				flags = 0;
+			}
+		}
+		
+		scriptdocuments
+		{
+			
+			document0
+			{
+				filename = "DIALOGUE";
+				hash = 3588187714;
+				resource;
+				tabtype = 0;
+				scripttype = 18;
+			}
+			
+			document1
+			{
+				filename = "SCRIPTS";
+				hash = 3469170009;
+				resource;
+				tabtype = 0;
+				scripttype = 1;
+				caretposition = 12629;
+				firstvisibleline = 526;
+				activetab = true;
+			}
 		}
 	}
 }

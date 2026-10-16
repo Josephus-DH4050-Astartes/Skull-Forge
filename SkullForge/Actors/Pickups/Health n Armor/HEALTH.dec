@@ -1,3 +1,22 @@
+Actor SF_HealthVial : Health 2014
+{
+    //$Title Health Vial
+    //$Category Health and Armor
+    //$Colour 1
+    //$Sprite HPBVA0
+    //$NotAngled
+    Inventory.Amount 2
+    Inventory.MaxAmount 200
+    Inventory.PickupMessage "\cqHEALTH AQUIRED: \cbHP Bonus \c*(+2 HP)"
+    Health.LowMessage 25, "\cqHEALTH AQUIRED: \cbHP Bonus \c*(+2 HP) \cl[CRITICAL CONDITION]"
+    States
+    {
+        Spawn:
+            HPBV A -1
+            Stop
+    }
+}
+
 Actor SF_Stimpack : Health 2011
 {
     //$Title Stimpack
@@ -12,7 +31,7 @@ Actor SF_Stimpack : Health 2011
     {
         Spawn:
             MEDK A -1
-            Loop
+            Stop
     }
 }
 
@@ -30,7 +49,7 @@ Actor SF_Medkit : Health 2012
     {
         Spawn:
             MEDK B -1
-            Loop
+            Stop
     }
 }
 
@@ -46,7 +65,7 @@ Actor SF_AdrenalinePack : CustomInventory 2023
     {
         Spawn:
             MEDK C -1
-            Loop
+            Stop
         Pickup:
             TNT1 A 0
             {
