@@ -21,42 +21,42 @@ class SF_Subject : Actor
         MeleeRange 32;
     }
 
-    // Custom function to check for a wall and climb if it meets height conditions
-    void TryClimbWall()
+    // Changed to a bool. Returns TRUE if a climb is initiated.
+    bool TryClimbWall()
     {
+        // Don't attempt to jump if already in mid-air
+        if (pos.z > floorz) return false;
+
         FLineTraceData traceData;
-        // Trace directly in front of the monster (radius + 16 units for foresight)
         bool hit = LineTrace(angle, radius + 16.0, 0, TRF_THRUACTORS, 8.0, 0, 0, traceData);
 
-        // Check if we specifically hit a wall
         if (hit && traceData.HitType == TRACE_HitWall)
         {
             Line hitLine = traceData.HitLine;
             
-            // Ensure there is a sector on the other side of this line (not a 1-sided wall)
+            if (hitLine.flags & (Line.ML_BLOCKING | Line.ML_BLOCKMONSTERS | Line.ML_BLOCKEVERYTHING))
+                return false;
+
             if (hitLine && hitLine.backsector)
             {
-                // Identify the sector on the opposite side of the line we just hit
                 Sector otherSector = (hitLine.frontsector == traceData.HitSector) ? hitLine.backsector : hitLine.frontsector;
 
                 if (otherSector)
                 {
-                    // Calculate the height of the floor in the next sector compared to the actor's feet
-                    // We append .XY to HitLocation to safely convert the Vector3 to a Vector2
                     double targetFloorZ = otherSector.floorplane.ZAtPoint(traceData.HitLocation.XY);
+                    double targetCeilZ = otherSector.ceilingplane.ZAtPoint(traceData.HitLocation.XY);
                     double stepHeight = targetFloorZ - pos.z;
 
-                    // Condition: higher than a standard step (24), but less than 48 units
-                    if (stepHeight > 24.0 && stepHeight < 48.0)
+                    if (stepHeight > 24.0 && stepHeight < 64.0 && (targetCeilZ - targetFloorZ) >= Height)
                     {
-                        // Apply an upward vaulting force and slight forward momentum
-                        vel.z = 9.0; 
-                        vel.x += cos(angle) * 6.0; 
-                        vel.y += sin(angle) * 6.0;
+                        // ONLY apply vertical thrust initially.
+                        vel.z = sqrt(stepHeight * 2.0) + 1.0; 
+                        return true;
                     }
                 }
             }
         }
+        return false;
     }
 
     States
@@ -70,7 +70,7 @@ class SF_Subject : Actor
         {
             A_LookEx(LOF_NOSOUNDCHECK, 0, 256, 0, 360, "Jump");
             A_SetSize(16, 13);
-            A_ChangeFlag("ALWAYSPAIN", true); // Reverted to A_ChangeFlag to satisfy the compiler
+            A_ChangeFlag("ALWAYSPAIN", true); 
         }
         Loop;
     Jump:
@@ -87,8 +87,10 @@ class SF_Subject : Actor
         SUBJ AAAA 4 Fast 
         {
             A_Chase();
-            TryClimbWall(); 
+            // If the climb function succeeds, jump to the ClimbLedge state
+            if (TryClimbWall()) { return ResolveState("ClimbLedge"); }
             A_SetTics(random(1, 5));
+            return ResolveState(null);
         }
         SUBJ BBBB 2 Fast A_Chase();
         SUBJ CCCC 2 Fast A_Chase();
@@ -99,6 +101,22 @@ class SF_Subject : Actor
             Speed = random(1, 9); 
         }
         Loop;
+    
+    // NEW STATE: Constantly pushes the monster forward while in the air
+    ClimbLedge:
+        SUBJ A 1 Fast
+        {
+            // Simulate holding the "W" key while jumping.
+            // As soon as their Z-height clears the wall, this will pull them onto the ledge.
+            vel.x = cos(angle) * 4.0;
+            vel.y = sin(angle) * 4.0;
+            
+            // If we have landed back on the ground, resume chasing
+            if (vel.z <= 0 && pos.z <= floorz) return ResolveState("See");
+            return ResolveState(null);
+        }
+        Loop;
+
     Melee:
         TNT1 A 0 A_StartSound("monsters/subject/attack", CHAN_VOICE);
         SUBJ EE 3 Fast 
@@ -143,10 +161,21 @@ class SF_Subject_Wander : SF_Subject
     {
     Spawn:
         TNT1 A 0 A_StartSound("monsters/subject/step", CHAN_BODY);
-        SUBJ AAAA 6 Fast { A_Look(); A_Wander(); TryClimbWall(); }
-        SUBJ BBBB 4 Fast { A_Look(); A_Wander(); TryClimbWall(); }
-        SUBJ CCCC 4 Fast { A_Look(); A_Wander(); TryClimbWall(); }
-        SUBJ DDDD 4 Fast { A_Look(); A_Wander(); TryClimbWall(); }
+        SUBJ AAAA 6 Fast { A_Look(); A_Wander(); if (TryClimbWall()) return ResolveState("WanderClimbLedge"); return ResolveState(null); }
+        SUBJ BBBB 4 Fast { A_Look(); A_Wander(); if (TryClimbWall()) return ResolveState("WanderClimbLedge"); return ResolveState(null); }
+        SUBJ CCCC 4 Fast { A_Look(); A_Wander(); if (TryClimbWall()) return ResolveState("WanderClimbLedge"); return ResolveState(null); }
+        SUBJ DDDD 4 Fast { A_Look(); A_Wander(); if (TryClimbWall()) return ResolveState("WanderClimbLedge"); return ResolveState(null); }
+        Loop;
+        
+    // Separate climb state for wanderers so they don't accidentally "wake up" after jumping
+    WanderClimbLedge:
+        SUBJ A 1 Fast
+        {
+            vel.x = cos(angle) * 4.0;
+            vel.y = sin(angle) * 4.0;
+            if (vel.z <= 0 && pos.z <= floorz) return ResolveState("Spawn");
+            return ResolveState(null);
+        }
         Loop;
     }
 }

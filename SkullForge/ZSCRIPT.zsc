@@ -1,8 +1,9 @@
 version "4.3"
 
-#include "ZScript/Karl.zsc"
-
+#include "ZScript/Weapons/Dominatus.zsc"
 #include "ZScript/Weapons/SpeedHucker.zsc"
 
 #include "ZScript/Monsters/Subject.zsc"
 #include "ZScript/Monsters/Geckoid.zsc"
+
+#include "ZScript/Karl.zsc"

@@ -26,3 +26,5 @@ Lavamander/attack LVMDATK
 $random Lavamander/walk { LVMDWLK1 LVMDWLK2 }
 LVMDWLK1 LVMDWLK1
 LVMDWLK2 LVMDWLK2
+
+GeckoFoid/Punch GFPNCH

@@ -1,4 +1,4 @@
-class SF_Player : DoomPlayer
+class SF_Player : PlayerPawn
 {
     Default
     {

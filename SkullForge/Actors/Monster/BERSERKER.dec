@@ -1,4 +1,4 @@
-ACTOR Berserker 30111
+ACTOR SF_Berserker 30111
 {
 	//$Title Berserker
 	//$Sprite LIBRC1
