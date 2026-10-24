@@ -6,7 +6,6 @@ GameInfo
 	DimAmount = 0.2
 	BorderFlat = "OBKMTD49"
 	BlurAmount = 0.05
-	IntermissionMusic = "D_INTER"
 
 	MenuFontColor_Title = "Skull_Cyan"
 	MenuFontColor_Label = "Skull_Cyan"
@@ -21,7 +20,6 @@ DoomEdNums
 	3300 = SF_Subject
 	3301 = SF_Subject_Wander
 	2003 = SF_SpeedHucker
-	82 = SF_Dominatus
 }
 
 ClearSkills
@@ -157,11 +155,12 @@ Map E1M3 "MAP03 NAME"
 	SecretNext = "E1M9"
 }
 
-Map E1M4 "MAP04 NAME"
+Map E1M4 "Supply Depot"
 {
 	Music = "SF_E1M4"
 	Sky1 = "SF_SKY1"
-	
+	fade = "0 19 34"
+	fogdensity = 50
 	Next = "E1M5"
 }
 
@@ -173,7 +172,7 @@ Map E1M5 "MAP05 NAME"
 	Next = "E1M6"
 }
 
-Map E1M6 "Bloat"
+Map E1M6 "MAP06 NAME"
 {
 	Music = "SF_E1M6"
 	Sky1 = "SF_SKY1"

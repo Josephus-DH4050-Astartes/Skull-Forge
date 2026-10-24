@@ -1,0 +1,8 @@
+Model Model_Boxes1
+{
+    Path "models"
+    Model 0 "Boxes1.obj"
+    Skin 0 "Boxes1.png"        
+    Scale 102.5 102.5 102.5       
+    FrameIndex POSS A 0 0
+}
