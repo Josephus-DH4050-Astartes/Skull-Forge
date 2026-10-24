@@ -1,9 +1,3 @@
-//IPK# compat Depricate Later
-#include "Actors/freedoom/deadthings.txt"
-#include "Actors/freedoom/doomartifacts.txt"
-#include "Actors/freedoom/doomdecorations.txt"
-#include "Actors/freedoom/doommisc.txt"
-
 //##PLAYER STUFF##
 
 #include "Actors/Player/KARL.dec"
@@ -12,7 +6,7 @@
 #include "Actors/Player/Weapons/RIPSAW.dec"
 #include "Actors/Player/Weapons/NOVA.dec"
 #include "Actors/Player/Weapons/SLUGGER.dec"
-//#include "Actors/Player/Weapons/DOMINATUS.dec"
+#include "Actors/Player/Weapons/DOMINATUS.dec"
 #include "Actors/Player/Weapons/VIPER.dec"
 //#include "Actors/Player/Weapons/SPEEDHUCKER.dec"
 
@@ -55,3 +49,6 @@
 //##MISC##
 
 #include "Actors/EFFECTS.dec"
+
+#include "Actors/MODELS.dec"
+
