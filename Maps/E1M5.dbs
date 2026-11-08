@@ -30,15 +30,15 @@ maps
 			resource1
 			{
 				type = 2;
-				location = "D:\\Downloads\\SkullForge.ipk3";
+				location = "D:\\DooM\\Doom Explorer\\Mods\\SkullForge.ipk3";
 				option1 = 0;
 				option2 = 0;
-				notfortesting = 1;
+				notfortesting = 0;
 				requiredarchives = "";
 			}
 		}
-		viewpositiony = 1539.985f;
-		viewpositionx = -2719.049f;
+		viewpositiony = 1461.5f;
+		viewpositionx = -1717.482f;
 		
 		testprecommand
 		{
@@ -62,7 +62,7 @@ maps
 			background = "";
 			backoffsety = 0;
 		}
-		viewscale = 0.5656981f;
+		viewscale = 0.4351513f;
 		
 		reloadresourceprecommand
 		{
